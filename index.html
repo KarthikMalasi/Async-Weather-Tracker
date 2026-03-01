@@ -141,7 +141,15 @@
 
         function saveCity(city) {
             let cities = JSON.parse(localStorage.getItem("cities")) || [];
-            cities.push(city);
+
+            // normalize (Delhi == delhi)
+            city = city.trim().toLowerCase();
+
+            // prevent duplicates
+            if (!cities.includes(city)) {
+                cities.push(city);
+            }
+
             localStorage.setItem("cities", JSON.stringify(cities));
             renderHistory();
         }
